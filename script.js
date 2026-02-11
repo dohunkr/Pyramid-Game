@@ -114,14 +114,42 @@ function setupPasswordLogic() {
 
 function updateSubmitButtonState() {
     const slots = document.querySelectorAll('.slot-refined input');
-    const names = Array.from(slots).map(input => input.value.trim()).filter(name => name !== '');
+    const inputs = Array.from(slots);
+    const names = inputs.map(input => input.value.trim());
 
-    const allFilled = names.length === 5;
-    const uniqueNames = new Set(names).size === names.length;
+    // Reset styles
+    inputs.forEach(input => input.classList.remove('invalid'));
 
+    let hasSubstringConflict = false;
+    let conflictIndices = new Set();
+
+    // Check for unique names and substring overlaps
+    for (let i = 0; i < names.length; i++) {
+        if (!names[i]) continue;
+        for (let j = 0; j < names.length; j++) {
+            if (i === j || !names[j]) continue;
+
+            // Block if name[i] is a substring of name[j]
+            // Case insensitive comparison for better security
+            if (names[j].toLowerCase().includes(names[i].toLowerCase())) {
+                hasSubstringConflict = true;
+                conflictIndices.add(i);
+                conflictIndices.add(j);
+            }
+        }
+    }
+
+    // Apply error style to conflicting slots
+    conflictIndices.forEach(index => {
+        inputs[index].classList.add('invalid');
+    });
+
+    const allFilled = names.every(name => name !== '');
+    const uniqueNames = new Set(names.filter(n => n !== '')).size === names.filter(n => n !== '').length;
     const btn = document.getElementById('submit-votes');
 
-    if (allFilled && uniqueNames) {
+    // Button is active only if all slots are filled, no substrings, and all names unique
+    if (allFilled && !hasSubstringConflict && uniqueNames) {
         btn.disabled = false;
         btn.classList.add('active');
     } else {

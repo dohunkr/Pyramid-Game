@@ -340,6 +340,12 @@ header {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+.slot-refined input.invalid {
+    border-bottom-color: #ff3e4d !important;
+    color: #ff3e4d;
+    text-shadow: 0 0 5px rgba(255, 62, 77, 0.3);
+}
+
 .drama-complete-btn-new {
     width: 100%;
     max-width: 280px;
