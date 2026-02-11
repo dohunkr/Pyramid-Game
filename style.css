@@ -264,26 +264,28 @@ header {
     /* Muted corporate blue/gray */
 }
 
-.pyramid-icon-layered {
-    width: 90px;
-    height: 90px;
-    margin-bottom: 15px;
-    opacity: 0.9;
+.pyramid-icon-refined {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    opacity: 1;
+    color: #4a5a6d;
+    /* Drama muted blue/gray */
 }
 
 .drama-title-voting {
-    font-size: 1.6rem;
-    font-weight: 600;
-    letter-spacing: 0.1rem;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.2rem;
     color: #fff;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-family: 'Noto Sans KR', sans-serif;
 }
 
 .drama-instruction-voting {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #4a5a6d;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
     letter-spacing: 0.05rem;
 }
 
@@ -291,28 +293,32 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 50px;
+    gap: 15px;
+    margin-bottom: 70px;
+    width: 100%;
 }
 
 .slot-refined {
     display: flex;
     align-items: center;
-    width: 220px;
+    width: 100%;
+    max-width: 280px;
+    /* Fixed width for better order */
 }
 
 .num-box {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border: 1px solid #4a5a6d;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #fff;
-    margin-right: 15px;
+    margin-right: 20px;
     font-family: 'Outfit', sans-serif;
+    flex-shrink: 0;
 }
 
 .slot-refined input {
@@ -321,32 +327,35 @@ header {
     border: none;
     border-bottom: 1px solid #2a3a4d;
     color: #fff;
-    font-size: 1.15rem;
-    padding: 2px 8px;
+    font-size: 1.2rem;
+    padding: 8px 5px;
     font-family: 'Noto Sans KR', sans-serif;
-    letter-spacing: 0.2rem;
-    transition: border-bottom-color 0.3s;
+    letter-spacing: 0.3rem;
+    transition: all 0.3s;
 }
 
 .slot-refined input:focus {
     outline: none;
     border-bottom-color: var(--drama-red);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .drama-complete-btn-new {
     width: 100%;
-    max-width: 220px;
+    max-width: 280px;
+    /* Aligned with slots */
     display: block;
-    margin: 30px auto;
-    padding: 14px;
+    margin: 40px auto;
+    padding: 18px;
     background: #0d1a29;
     border: 1px solid #1a2a3d;
     color: #2a3a4d;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: 600;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.1rem;
 }
 
 .drama-complete-btn-new.active {
