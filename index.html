@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyramid Game - Voting App</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+KR:wght@300;400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <nav class="view-switcher">
+            <button id="show-ranking" class="nav-btn active">RANKING</button>
+            <button id="show-voting" class="nav-btn">VOTE</button>
+        </nav>
+
+        <main>
+            <!-- Entry Screen (Matches Drama reference) -->
+            <section id="entry-view" class="view">
+                <div class="drama-logo-large">
+                    <svg viewBox="0 0 100 100" class="pyramid-icon-white">
+                        <polygon points="50,10 90,90 10,90" fill="white" />
+                        <line x1="50" y1="10" x2="50" y2="90" stroke="#050b14" stroke-width="2" />
+                        <line x1="30" y1="50" x2="70" y2="50" stroke="#050b14" stroke-width="2" />
+                        <line x1="20" y1="70" x2="80" y2="70" stroke="#050b14" stroke-width="2" />
+                    </svg>
+                    <h1 class="drama-title-main">피라미드 게임</h1>
+                </div>
+
+                <div class="warning-section">
+                    <p class="warning-text">게임을 외부로 유출 시,</p>
+                    <p class="warning-text">그에 상응하는 최고 수위 벌칙이 따른다</p>
+                </div>
+
+                <div class="agreement-section">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="rules-agreement">
+                        <span class="checkmark"></span>
+                        <span class="label-text">게임 규칙에 동의합니다</span>
+                    </label>
+                </div>
+
+                <button id="start-voting-btn" class="drama-start-btn" disabled>투표시작</button>
+            </section>
+
+            <!-- Ranking View -->
+            <section id="ranking-view" class="view">
+                <header>
+                    <div class="logo">PYRAMID <span class="accent">GAME</span></div>
+                    <div class="subtitle">BAEKYEON GIRLS' HIGH SCHOOL</div>
+                </header>
+                <div id="pyramid-container" class="pyramid">
+                    <!-- Pyramid levels will be injected here -->
+                </div>
+            </section>
+
+            <!-- Voting View (Matches Drama Reference) -->
+            <section id="voting-view" class="view hidden">
+                <div class="drama-logo">
+                    <svg viewBox="0 0 100 100" class="pyramid-icon">
+                        <polygon points="50,10 90,90 10,90" fill="none" stroke="currentColor" stroke-width="2" />
+                        <line x1="50" y1="10" x2="50" y2="90" stroke="currentColor" stroke-width="2" />
+                        <line x1="30" y1="50" x2="70" y2="50" stroke="currentColor" stroke-width="2" />
+                        <line x1="20" y1="70" x2="80" y2="70" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                    <h1 class="drama-title">제13회 피라미드 게임</h1>
+                    <p class="drama-instruction">이름을 입력하세요</p>
+                </div>
+
+                <div class="voting-slots">
+                    <div class="slot" data-slot="1"><span class="slot-num">1</span> <input type="text"
+                            placeholder="이름 입력"></div>
+                    <div class="slot" data-slot="2"><span class="slot-num">2</span> <input type="text"
+                            placeholder="이름 입력"></div>
+                    <div class="slot" data-slot="3"><span class="slot-num">3</span> <input type="text"
+                            placeholder="이름 입력"></div>
+                    <div class="slot" data-slot="4"><span class="slot-num">4</span> <input type="text"
+                            placeholder="이름 입력"></div>
+                    <div class="slot" data-slot="5"><span class="slot-num">5</span> <input type="text"
+                            placeholder="이름 입력"></div>
+                </div>
+
+
+                <button id="submit-votes" class="drama-complete-btn" disabled>투표 완료</button>
+            </section>
+        </main>
+
+        <div id="vote-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <div id="modal-student-detail"></div>
+                <button id="confirm-vote" class="vote-btn">CAST VOTE</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 PYRAMID GAME INTERFACE. ALL RIGHTS RESERVED.</p>
+        </footer>
+    </div>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
