@@ -58,7 +58,7 @@ function setupEventListeners() {
     };
 
     // Voting Logic
-    const slots = document.querySelectorAll('.slot input');
+    const slots = document.querySelectorAll('.slot-refined input');
     slots.forEach(input => {
         input.addEventListener('input', updateSubmitButtonState);
     });
@@ -113,7 +113,7 @@ function setupPasswordLogic() {
 }
 
 function updateSubmitButtonState() {
-    const slots = document.querySelectorAll('.slot input');
+    const slots = document.querySelectorAll('.slot-refined input');
     const names = Array.from(slots).map(input => input.value.trim()).filter(name => name !== '');
 
     const allFilled = names.length === 5;
@@ -184,7 +184,7 @@ async function switchView(view) {
         votingBtn.classList.add('active');
         votingView.classList.remove('hidden');
         nav.style.display = 'flex';
-        const slots = document.querySelectorAll('.slot input');
+        const slots = document.querySelectorAll('.slot-refined input');
         slots.forEach(input => input.value = '');
         updateSubmitButtonState();
     }
@@ -241,7 +241,7 @@ function renderPyramid() {
 }
 
 async function castVotes() {
-    const slots = document.querySelectorAll('.slot input');
+    const slots = document.querySelectorAll('.slot-refined input');
     const votedNames = Array.from(slots).map(input => input.value.trim()).filter(name => name !== '');
 
     if (votedNames.length === 5) {
