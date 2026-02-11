@@ -98,18 +98,23 @@ async function switchView(view) {
     }
 
     const views = [entryView, rankingView, votingView];
-    const currentView = views.find(v => !v.classList.contains('hidden'));
+    const otherViews = views.filter(v => v.id !== `${view}-view`);
+    const currentView = views.find(v => !v.classList.contains('hidden') && v.id !== `${view}-view`);
 
     if (currentView) {
         currentView.style.opacity = '0';
         currentView.style.transform = 'translateY(-10px)';
         currentView.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
         await new Promise(resolve => setTimeout(resolve, 300));
-        currentView.classList.add('hidden');
-        // Reset styles for next time
+        // Hide all other views just in case
+        views.forEach(v => v.classList.add('hidden'));
+        // Reset styles
         currentView.style.opacity = '';
         currentView.style.transform = '';
         currentView.style.transition = '';
+    } else {
+        // If no view is currently visible, still ensure others are hidden
+        views.forEach(v => v.classList.add('hidden'));
     }
 
     if (view === 'entry') {
