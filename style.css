@@ -53,12 +53,24 @@ body {
     cursor: pointer;
     padding: 10px 0;
     border-bottom: 2px solid transparent;
-    transition: all 0.3s;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.nav-btn:hover {
+    color: #fff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
 .nav-btn.active {
     color: var(--accent-color);
     border-bottom-color: var(--accent-color);
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+    opacity: 0.8;
 }
 
 .view.hidden {
@@ -194,15 +206,27 @@ header {
     font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     letter-spacing: 0.2rem;
+    position: relative;
+    overflow: hidden;
 }
 
 .drama-start-btn.active {
     background: #c32d3a;
     border-color: #ff3e4d;
     color: #fff;
-    box-shadow: 0 0 20px rgba(195, 45, 58, 0.4);
+    box-shadow: 0 0 15px rgba(195, 45, 58, 0.4);
+}
+
+.drama-start-btn.active:hover {
+    background: #d43d4a;
+    box-shadow: 0 0 25px rgba(195, 45, 58, 0.6);
+    transform: translateY(-2px);
+}
+
+.drama-start-btn.active:active {
+    transform: translateY(1px) scale(0.98);
 }
 
 .drama-start-btn:disabled {
@@ -298,13 +322,25 @@ header {
     border-radius: 8px;
     font-size: 1.1rem;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .drama-complete-btn.active {
     background: #1a2a3d;
     color: var(--accent-color);
     border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(195, 45, 58, 0.2);
+}
+
+.drama-complete-btn.active:hover {
+    color: #fff;
+    border-color: #ff3e4d;
+    box-shadow: 0 0 20px rgba(195, 45, 58, 0.4);
+    transform: translateY(-1px);
+}
+
+.drama-complete-btn.active:active {
+    transform: translateY(1px) scale(0.98);
 }
 
 /* Ranking View (Drama Style) */
@@ -345,10 +381,132 @@ header {
     align-items: center;
     padding: 12px 15px;
     border-bottom: 1px solid rgba(42, 58, 77, 0.3);
+    opacity: 0;
+    animation: slideUpFade 0.5s ease-out forwards;
+}
+
+/* Stagger indices for ranking list (up to 20 items for now) */
+.student-row:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.student-row:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.student-row:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.student-row:nth-child(4) {
+    animation-delay: 0.25s;
+}
+
+.student-row:nth-child(5) {
+    animation-delay: 0.3s;
+}
+
+.student-row:nth-child(6) {
+    animation-delay: 0.35s;
+}
+
+.student-row:nth-child(7) {
+    animation-delay: 0.4s;
+}
+
+.student-row:nth-child(8) {
+    animation-delay: 0.45s;
+}
+
+.student-row:nth-child(9) {
+    animation-delay: 0.5s;
+}
+
+.student-row:nth-child(10) {
+    animation-delay: 0.55s;
 }
 
 .student-row:last-child {
     border-bottom: none;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.modal-content {
+    background: #0d1a29;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--accent-color);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(195, 45, 58, 0.3);
+    position: relative;
+    transform: scale(0.9);
+    animation: modalSlideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes modalSlideUp {
+    to {
+        transform: scale(1);
+    }
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #fff;
+}
+
+.vote-btn {
+    margin-top: 30px;
+    width: 100%;
+    padding: 15px;
+    background: var(--accent-color);
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vote-btn:hover {
+    background: #d43d4a;
+    box-shadow: 0 0 15px rgba(195, 45, 58, 0.5);
+    transform: translateY(-2px);
+}
+
+.vote-btn:active {
+    transform: translateY(1px) scale(0.98);
 }
 
 .student-name {
@@ -371,6 +529,64 @@ header {
     font-size: 0.9rem;
     color: var(--text-secondary);
     font-weight: 300;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes logoEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) rotate(-10deg);
+        filter: blur(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+        filter: blur(0);
+    }
+}
+
+.view {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.drama-logo-large {
+    animation: logoEntrance 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.drama-title-main {
+    animation: slideUpFade 1s ease-out 0.4s both;
+}
+
+.warning-section {
+    animation: slideUpFade 1s ease-out 0.8s both;
+}
+
+.agreement-section,
+.drama-start-btn {
+    animation: slideUpFade 1s ease-out 1.2s both;
 }
 
 /* Responsive */

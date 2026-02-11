@@ -21,7 +21,6 @@ async function init() {
     database.ref('students').on('value', (snapshot) => {
         const data = snapshot.val();
         if (data) {
-            // Convert object to array if needed or handle as object
             students = Object.values(data);
         } else {
             students = [];
@@ -29,14 +28,14 @@ async function init() {
         render();
     });
 
-    switchView('entry'); // Start with entry screen
+    await switchView('entry'); // Start with entry screen
     setupEventListeners();
 }
 
 function setupEventListeners() {
     // View Switcher
-    document.getElementById('show-ranking').onclick = () => switchView('ranking');
-    document.getElementById('show-voting').onclick = () => switchView('voting');
+    document.getElementById('show-ranking').onclick = async () => await switchView('ranking');
+    document.getElementById('show-voting').onclick = async () => await switchView('voting');
 
     // Entry Screen Logic
     const agreement = document.getElementById('rules-agreement');
@@ -52,9 +51,9 @@ function setupEventListeners() {
         }
     };
 
-    startBtn.onclick = () => {
+    startBtn.onclick = async () => {
         hasAgreed = true;
-        switchView('voting');
+        await switchView('voting');
     };
 
     // Voting Logic
@@ -84,7 +83,7 @@ function updateSubmitButtonState() {
     }
 }
 
-function switchView(view) {
+async function switchView(view) {
     const rankingBtn = document.getElementById('show-ranking');
     const votingBtn = document.getElementById('show-voting');
     const entryView = document.getElementById('entry-view');
@@ -98,13 +97,25 @@ function switchView(view) {
         return;
     }
 
-    // Hide all views first
-    [entryView, rankingView, votingView].forEach(v => v.classList.add('hidden'));
+    const views = [entryView, rankingView, votingView];
+    const currentView = views.find(v => !v.classList.contains('hidden'));
+
+    if (currentView) {
+        currentView.style.opacity = '0';
+        currentView.style.transform = 'translateY(-10px)';
+        currentView.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        await new Promise(resolve => setTimeout(resolve, 300));
+        currentView.classList.add('hidden');
+        // Reset styles for next time
+        currentView.style.opacity = '';
+        currentView.style.transform = '';
+        currentView.style.transition = '';
+    }
 
     if (view === 'entry') {
         entryView.classList.remove('hidden');
         nav.style.display = 'none';
-        hasAgreed = false; // Reset if going back to entry
+        hasAgreed = false;
     } else if (view === 'ranking') {
         rankingBtn.classList.add('active');
         votingBtn.classList.remove('active');
@@ -116,7 +127,6 @@ function switchView(view) {
         votingBtn.classList.add('active');
         votingView.classList.remove('hidden');
         nav.style.display = 'flex';
-        // Reset slots if switching view
         const slots = document.querySelectorAll('.slot input');
         slots.forEach(input => input.value = '');
         updateSubmitButtonState();
@@ -173,7 +183,7 @@ function renderPyramid() {
     });
 }
 
-function castVotes() {
+async function castVotes() {
     const slots = document.querySelectorAll('.slot input');
     const votedNames = Array.from(slots).map(input => input.value.trim()).filter(name => name !== '');
 
@@ -213,7 +223,7 @@ function castVotes() {
         updateSubmitButtonState();
 
         alert('투표가 성공적으로 완료되었습니다.');
-        switchView('ranking');
+        await switchView('ranking');
     }
 }
 
