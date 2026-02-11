@@ -118,6 +118,27 @@ header {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
+.drama-title-main-small {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 0.3rem;
+    color: #fff;
+    margin-top: 10px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.drama-title-main-small .white {
+    font-weight: 400;
+}
+
+.drama-instruction-small {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-top: 15px;
+    letter-spacing: 0.05rem;
+    opacity: 0.8;
+}
+
 .warning-section {
     text-align: center;
     margin-bottom: 50px;
@@ -323,6 +344,62 @@ header {
     font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Password Screen Styles */
+.password-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
+
+.password-slots {
+    display: flex;
+    gap: 15px;
+    margin-top: 80px;
+}
+
+.p-slot {
+    width: 40px;
+    height: 50px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #2a3a4d;
+    color: #fff;
+    font-size: 1.5rem;
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+.p-slot:focus {
+    outline: none;
+    border-bottom-color: var(--drama-red);
+    box-shadow: 0 5px 10px rgba(255, 62, 77, 0.1);
+}
+
+.p-slot.error {
+    border-bottom-color: var(--accent-color);
+    animation: shake 0.4s;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
 }
 
 .drama-complete-btn.active {

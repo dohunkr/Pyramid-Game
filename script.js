@@ -28,8 +28,9 @@ async function init() {
         render();
     });
 
-    await switchView('entry'); // Start with entry screen
+    await switchView('password'); // Start with password screen
     setupEventListeners();
+    setupPasswordLogic();
 }
 
 function setupEventListeners() {
@@ -65,6 +66,52 @@ function setupEventListeners() {
     document.getElementById('submit-votes').onclick = castVotes;
 }
 
+function setupPasswordLogic() {
+    const slots = document.querySelectorAll('.p-slot');
+    const password = "HONEY";
+
+    slots.forEach((slot, index) => {
+        slot.addEventListener('input', (e) => {
+            const value = e.target.value.toUpperCase();
+            e.target.value = value;
+
+            if (value && index < slots.length - 1) {
+                slots[index + 1].focus();
+            }
+
+            checkPassword();
+        });
+
+        slot.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !slot.value && index > 0) {
+                slots[index - 1].focus();
+            }
+        });
+    });
+
+    async function checkPassword() {
+        const entered = Array.from(slots).map(s => s.value).join('').toUpperCase();
+        if (entered.length === 5) {
+            if (entered === password) {
+                // Success animation
+                slots.forEach(s => s.style.borderBottomColor = '#4CAF50');
+                await new Promise(r => setTimeout(r, 500));
+                switchView('entry');
+            } else {
+                // Error animation
+                slots.forEach(s => s.classList.add('error'));
+                setTimeout(() => {
+                    slots.forEach(s => {
+                        s.classList.remove('error');
+                        s.value = '';
+                    });
+                    slots[0].focus();
+                }, 500);
+            }
+        }
+    }
+}
+
 function updateSubmitButtonState() {
     const slots = document.querySelectorAll('.slot input');
     const names = Array.from(slots).map(input => input.value.trim()).filter(name => name !== '');
@@ -89,15 +136,16 @@ async function switchView(view) {
     const entryView = document.getElementById('entry-view');
     const rankingView = document.getElementById('ranking-view');
     const votingView = document.getElementById('voting-view');
+    const passwordView = document.getElementById('password-view');
     const nav = document.querySelector('.view-switcher');
 
     // Prevent bypassing entry screen
-    if (!hasAgreed && view !== 'entry') {
+    if (!hasAgreed && view !== 'entry' && view !== 'password') {
         alert('게임 규칙에 동의해야 합니다.');
         return;
     }
 
-    const views = [entryView, rankingView, votingView];
+    const views = [entryView, rankingView, votingView, passwordView];
     const otherViews = views.filter(v => v.id !== `${view}-view`);
     const currentView = views.find(v => !v.classList.contains('hidden') && v.id !== `${view}-view`);
 
@@ -117,7 +165,11 @@ async function switchView(view) {
         views.forEach(v => v.classList.add('hidden'));
     }
 
-    if (view === 'entry') {
+    if (view === 'password') {
+        passwordView.classList.remove('hidden');
+        nav.style.display = 'none';
+        hasAgreed = false;
+    } else if (view === 'entry') {
         entryView.classList.remove('hidden');
         nav.style.display = 'none';
         hasAgreed = false;
